@@ -1,0 +1,19 @@
+app:
+  HOST: 0.0.0.0
+  PORT: 8000
+  DEBUG: True
+  CorsOrigins: [ "http://localhost:3000", "http://127.0.0.1:3000" ]
+  CorsMaxAge: 3600
+  GoogleClientId:
+  GoogleClientSecret:
+  GoogleRedirectUrl: http://localhost:3000
+
+db:
+  host: localhost
+  port: 5432
+  username: user
+  password: password
+  db: postgres
+  MaxOpenConns: 25
+  MaxIdleConns: 25
+  ConnMaxIdleTime: 15m
