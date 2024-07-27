@@ -5,10 +5,10 @@ app:
   CorsOrigins: [ "http://localhost:3000", "http://127.0.0.1:3000" ]
   CorsMaxAge: 3600
   GoogleClientId:
-  GoogleClientSecret:
+  GoogleClientSecret: 
   GoogleRedirectUrl: http://localhost:3000
 
-db:
+postgres:
   host: localhost
   port: 5432
   username: user
@@ -16,4 +16,4 @@ db:
   db: postgres
   MaxOpenConns: 25
   MaxIdleConns: 25
-  ConnMaxIdleTime: 15m
+  ConnMaxIdleTime: 15

@@ -4,19 +4,19 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/iarsham/oauth2-example/configs"
 	_ "github.com/lib/pq"
-	"os"
 	"time"
 )
 
-func OpenDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", makeDsn())
+func OpenDB(cfg *configs.Config) (*sql.DB, error) {
+	db, err := sql.Open("postgres", makeDsn(cfg))
 	if err != nil {
 		return nil, err
 	}
-	db.SetMaxOpenConns(25)
-	db.SetMaxIdleConns(25)
-	db.SetConnMaxIdleTime(15 * time.Minute)
+	db.SetMaxOpenConns(cfg.Postgres.MaxOpenConns)
+	db.SetMaxIdleConns(cfg.Postgres.MaxIdleConns)
+	db.SetConnMaxIdleTime(time.Duration(cfg.Postgres.ConnMaxIdleTime) * time.Minute)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := db.PingContext(ctx); err != nil {
@@ -25,12 +25,13 @@ func OpenDB() (*sql.DB, error) {
 	return db, nil
 }
 
-func makeDsn() string {
+func makeDsn(cfg *configs.Config) string {
 	return fmt.Sprintf(
-		"host=%s port=5432 user=%s password=%s dbname=%s sslmode=disable",
-		os.Getenv("DATABASE_HOST"),
-		os.Getenv("DATABASE_USER"),
-		os.Getenv("DATABASE_PASSWORD"),
-		os.Getenv("DATABASE_NAME"),
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		cfg.Postgres.Host,
+		cfg.Postgres.Port,
+		cfg.Postgres.Username,
+		cfg.Postgres.Password,
+		cfg.Postgres.DB,
 	)
 }

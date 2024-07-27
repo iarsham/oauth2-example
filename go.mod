@@ -5,7 +5,6 @@ go 1.22.5
 require (
 	github.com/iarsham/bindme v0.9.1
 	github.com/iarsham/multiplexer v1.1.1
-	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
 	github.com/rs/cors v1.11.0
 	github.com/spf13/viper v1.19.0

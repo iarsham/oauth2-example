@@ -6,7 +6,6 @@ import (
 	"github.com/iarsham/oauth2-example/internal/database"
 	"github.com/iarsham/oauth2-example/internal/routers"
 	"github.com/iarsham/oauth2-example/pkg/logger"
-	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 	"net/http"
 	"time"
@@ -24,7 +23,7 @@ func main() {
 	}
 	defer logs.Sync()
 
-	db, err := database.OpenDB()
+	db, err := database.OpenDB(cfg)
 	if err != nil {
 		logs.Fatal(err.Error())
 	}
@@ -41,11 +40,5 @@ func main() {
 	logs.Info("Starting server", zap.String("host", cfg.App.Host), zap.Int("port", cfg.App.Port))
 	if err := srv.ListenAndServe(); err != nil {
 		logs.Fatal(err.Error())
-	}
-}
-
-func init() {
-	if err := godotenv.Load("./.env"); err != nil {
-		panic(err)
 	}
 }
